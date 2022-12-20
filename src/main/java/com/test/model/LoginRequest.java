@@ -19,7 +19,7 @@ public class LoginRequest implements Serializable {
 	public LoginRequest(String username, String password, long timeinminutes) {
 		this.setUsername(username);
 		this.setPassword(password);
-		this.setTimeInMinutes(timeinminutes);
+		this.setTimeinminutes(timeinminutes);
 	}
 
 	public String getUsername() {
@@ -38,11 +38,11 @@ public class LoginRequest implements Serializable {
 		this.password = password;
 	}
 
-	public long getTimeInMinutes() {
+	public long getTimeinminutes() {
 		return this.timeinminutes;
 	}
 
-	public void setTimeInMinutes(long timeinminutes) {
+	public void setTimeinminutes(long timeinminutes) {
 		this.timeinminutes = timeinminutes;
 	}
 }

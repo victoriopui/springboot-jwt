@@ -1,9 +1,5 @@
 package com.test.controller;
 
-import java.util.Objects;
-
-import javax.validation.constraints.Null;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,7 +8,6 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,7 +40,7 @@ public class JwtAuthenticationController {
 		final UserDetails userDetails = userDetailsService
 				.loadUserByUsername(authenticationRequest.getUsername());
 
-		final String token = jwtTokenUtil.generateToken(userDetails, authenticationRequest.getTimeInMinutes());
+		final String token = jwtTokenUtil.generateToken(userDetails, authenticationRequest.getTimeinminutes());
 
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
@@ -58,13 +53,14 @@ public class JwtAuthenticationController {
         
         if (userDetails != null) {
             try {
+				System.out.println("token expire:");
+				System.out.println(jwtTokenUtil.getExpirationDateFromToken(tokenValidationRequest.getToken()));
                 if (jwtTokenUtil.validateToken(tokenValidationRequest.getToken(), userDetails)) {
                     return ResponseEntity.ok(new TokenValidationResponse("valid"));
                 }
             } catch (Exception e) {
                 return ResponseEntity.ok(new TokenValidationResponse("expired"));
             }
-            
         }
 
 		return ResponseEntity.ok(new TokenValidationResponse("expired"));
