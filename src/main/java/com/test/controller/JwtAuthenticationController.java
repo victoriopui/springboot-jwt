@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.test.config.JwtTokenUtil;
+import com.test.model.BasicResponse;
 import com.test.model.JwtResponse;
 import com.test.model.LoginRequest;
 import com.test.model.TokenValidationRequest;
-import com.test.model.TokenValidationResponse;
 import com.test.service.JwtUserDetailsService;
 
 @RestController
@@ -56,14 +56,14 @@ public class JwtAuthenticationController {
 				System.out.println("token expire:");
 				System.out.println(jwtTokenUtil.getExpirationDateFromToken(tokenValidationRequest.getToken()));
                 if (jwtTokenUtil.validateToken(tokenValidationRequest.getToken(), userDetails)) {
-                    return ResponseEntity.ok(new TokenValidationResponse("valid"));
+                    return ResponseEntity.ok(new BasicResponse(true, "Valid"));
                 }
             } catch (Exception e) {
-                return ResponseEntity.ok(new TokenValidationResponse("expired"));
+                return ResponseEntity.ok(new BasicResponse(false, "Expired"));
             }
         }
 
-		return ResponseEntity.ok(new TokenValidationResponse("expired"));
+		return ResponseEntity.ok(new BasicResponse(false, "Expired"));
 	}
 
 	private void authenticate(String username, String password) throws Exception {
