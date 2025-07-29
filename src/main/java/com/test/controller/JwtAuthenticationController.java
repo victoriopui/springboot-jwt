@@ -18,7 +18,7 @@ import com.test.model.BasicResponse;
 import com.test.model.JwtResponse;
 import com.test.model.LoginRequest;
 import com.test.model.TokenValidationRequest;
-import com.test.service.JwtUserDetailsService;
+import com.test.service.UserService;
 
 @RestController
 @CrossOrigin
@@ -31,16 +31,19 @@ public class JwtAuthenticationController {
 	private JwtTokenUtil jwtTokenUtil;
 
 	@Autowired
-	private JwtUserDetailsService userDetailsService;
+	private UserService userDetailsService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<?> doLogin(@RequestBody LoginRequest authenticationRequest) throws Exception {
+		if (userDetailsService.loadUserByUsername(authenticationRequest.getUsername()) == null) {
+			return ResponseEntity.badRequest().body(new BasicResponse(false, "Username does not exist"));
+		}
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
 		final UserDetails userDetails = userDetailsService
 				.loadUserByUsername(authenticationRequest.getUsername());
 
-		final String token = jwtTokenUtil.generateToken(userDetails, authenticationRequest.getTimeinminutes());
+		final String token = jwtTokenUtil.generateToken(userDetails, authenticationRequest.getTime());
 
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
