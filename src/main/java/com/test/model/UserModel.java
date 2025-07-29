@@ -1,30 +1,64 @@
 package com.test.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
-public class DocumentGenerateRequest implements Serializable {
+@Entity
+@Table(name = "users")
+public class UserModel implements Serializable {
 
-	private static final long serialVersionUID = 5926468583005150707L;
-	
+    private static final long serialVersionUID = 2847592847592847L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    // User details
+    @Column(name = "firstname", nullable = false)
 	private String firstname;
+    
+    @Column(name = "lastname", nullable = false)
     private String lastname;
+    
+    @Column(name = "dateofbirth")
     private String dateofbirth;
+    
+    @Column(name = "gender")
     private String gender;
+    
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
+    
+    @Column(name = "mobileno")
     private String mobileno;
+    
+    @Column(name = "address")
     private String address;
+    
+    @Column(name = "city")
     private String city;
+    
+    @Column(name = "state")
     private String state;
+    
+    @Column(name = "country")
     private String country;
+    
+    // Pin for user authentication, on production this should be hashed
+    @Column(name = "pin", nullable = false)
     private String pin;
+
+    // Password field for user authentication, currently is hashed from pin
+    @Column(name = "password", nullable = false)
+    private String password;
     
     //need default constructor for JSON Parsing
-	public DocumentGenerateRequest()
+	public UserModel()
 	{
 
 	}
-    
-	public DocumentGenerateRequest(String firstname, String lastname, String dateofbirth, String gender, String email,
+
+	public UserModel(String firstname, String lastname, String dateofbirth, String gender, String email,
             String mobileno, String address, String city, String state, String country, String pin) {
         this.firstname = firstname;
         this.lastname = lastname;
@@ -37,6 +71,14 @@ public class DocumentGenerateRequest implements Serializable {
         this.state = state;
         this.country = country;
         this.pin = pin;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstname() {
@@ -125,6 +167,14 @@ public class DocumentGenerateRequest implements Serializable {
 
     public void setPin(String pin) {
         this.pin = pin;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
