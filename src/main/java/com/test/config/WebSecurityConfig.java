@@ -56,6 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/verifytoken").permitAll()
+				.antMatchers("/users/**").permitAll() // Allow access to user endpoints for testing
 				// all other requests need to be authenticated
 				.anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to
