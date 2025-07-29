@@ -8,7 +8,7 @@ public class LoginRequest implements Serializable {
 	
 	private String username;
 	private String password;
-	private long timeinminutes;
+	private long time;
 	
 	//need default constructor for JSON Parsing
 	public LoginRequest()
@@ -16,10 +16,10 @@ public class LoginRequest implements Serializable {
 		
 	}
 
-	public LoginRequest(String username, String password, long timeinminutes) {
+	public LoginRequest(String username, String password, long time) {
 		this.setUsername(username);
 		this.setPassword(password);
-		this.setTimeinminutes(timeinminutes);
+		this.setTime(time);
 	}
 
 	public String getUsername() {
@@ -38,11 +38,11 @@ public class LoginRequest implements Serializable {
 		this.password = password;
 	}
 
-	public long getTimeinminutes() {
-		return this.timeinminutes;
+	public long getTime() {
+		return this.time;
 	}
 
-	public void setTimeinminutes(long timeinminutes) {
-		this.timeinminutes = timeinminutes;
+	public void setTime(long time) {
+		this.time = time;
 	}
 }
